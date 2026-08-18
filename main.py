@@ -1,3 +1,4 @@
+# Fantasy Premier League prediction model
 import requests
 import pandas as pd
 
@@ -33,6 +34,7 @@ players["minutes_per_start"] = players["minutes"] / players["starts"]
 players["minutes_share"] = players["minutes"] / (38 * 90)
 players["expected_xgi"] = players["xgi_per_90"] * players["minutes_share"]
 players = players[players["minutes"] >= MINUTES_THRESHOLD]
+
 
 
 print(players[
