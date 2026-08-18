@@ -33,6 +33,12 @@ players["xgi_per_90"] = (
 players["minutes_per_start"] = players["minutes"] / players["starts"]
 players["minutes_share"] = players["minutes"] / (38 * 90)
 players["expected_xgi"] = players["xgi_per_90"] * players["minutes_share"]
+players["expected_goal_points"] = players["expected_goals"] * 4
+players["expected_assist_points"] = players["expected_assists"] * 3
+players["expected_attacking_points"] = (
+    players["expected_goal_points"]
+    + players["expected_assist_points"]
+)
 players = players[players["minutes"] >= MINUTES_THRESHOLD]
 
 
@@ -41,8 +47,8 @@ print(players[
     [
         "web_name",
         "position",
-        "xgi_per_90",
-        "minutes_share",
-        "expected_xgi"
+        "expected_goals",
+        "expected_assists",
+        "expected_attacking_points"
     ]
-].sort_values("expected_xgi", ascending=False).head(20))
+].sort_values("expected_attacking_points", ascending=False).head(20))
