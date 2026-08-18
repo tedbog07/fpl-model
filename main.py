@@ -22,6 +22,12 @@ position_map = {
     3: "Midfielder",
     4: "Forward"
 }
+goal_points_map = {
+    "Goalkeeper": 10,
+    "Defender": 6,
+    "Midfielder": 5,
+    "Forward": 4
+}
 
 players["position"] = players["element_type"].map(position_map)
 players["points_per_million"] = players["total_points"] / (players["now_cost"] / 10)
@@ -33,11 +39,22 @@ players["xgi_per_90"] = (
 players["minutes_per_start"] = players["minutes"] / players["starts"]
 players["minutes_share"] = players["minutes"] / (38 * 90)
 players["expected_xgi"] = players["xgi_per_90"] * players["minutes_share"]
-players["expected_goal_points"] = players["expected_goals"] * 4
+players["goal_points_value"] = players["position"].map(goal_points_map)
+
+players["expected_goal_points"] = (
+    players["expected_goals"] * players["goal_points_value"]
+)
 players["expected_assist_points"] = players["expected_assists"] * 3
 players["expected_attacking_points"] = (
     players["expected_goal_points"]
     + players["expected_assist_points"]
+)
+players["expected_appearance_points"] = (
+    players["minutes_share"] * 38 * 2
+)
+players["expected_total_points"] = (
+    players["expected_attacking_points"]
+    + players["expected_appearance_points"]
 )
 players = players[players["minutes"] >= MINUTES_THRESHOLD]
 
@@ -47,8 +64,8 @@ print(players[
     [
         "web_name",
         "position",
-        "expected_goals",
-        "expected_assists",
-        "expected_attacking_points"
+        "expected_attacking_points",
+        "expected_appearance_points",
+        "expected_total_points"
     ]
-].sort_values("expected_attacking_points", ascending=False).head(20))
+].sort_values("expected_total_points", ascending=False).head(20))
