@@ -61,6 +61,10 @@ players["expected_total_points"] = (
     players["expected_attacking_points"]
     + players["expected_appearance_points"]
 )
+players["adjusted_attacking_points"] = (
+    players["expected_attacking_points"]
+    * players["minutes_projection"]
+)
 players = players[players["minutes"] >= MINUTES_THRESHOLD]
 
 
@@ -68,8 +72,9 @@ players = players[players["minutes"] >= MINUTES_THRESHOLD]
 print(players[
     [
         "web_name",
-        "minutes_share",
-        "start_rate",
-        "minutes_projection"
+        "position",
+        "expected_attacking_points",
+        "minutes_projection",
+        "adjusted_attacking_points"
     ]
-].sort_values("minutes_projection", ascending=False).head(20))
+].sort_values("adjusted_attacking_points", ascending=False).head(20))
