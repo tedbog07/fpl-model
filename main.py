@@ -66,12 +66,23 @@ players["underlying_pp90"] = (
     / players["minutes"]
     * 90
 )
+players["expected_appearance_pp90"] = (
+    players["minutes_share"] * 2
+)
+players["underlying_pp90"] = (
+    players["underlying_pp90"]
+    + players["expected_appearance_pp90"]
+)
 players["adjusted_attacking_points"] = (
     players["expected_attacking_points"]
     * players["minutes_projection"]
 )
 players["actual_pp90"] = (
     players["total_points"] / players["minutes"] * 90
+)
+players["player_strength"] = (
+    players["actual_pp90"] * 0.5
+    + players["underlying_pp90"] * 0.5
 )
 
 players = players[players["minutes"] >= MINUTES_THRESHOLD]
@@ -83,6 +94,7 @@ print(players[
         "web_name",
         "position",
         "actual_pp90",
-        "underlying_pp90"
+        "underlying_pp90",
+        "player_strength"
     ]
-].sort_values("underlying_pp90", ascending=False).head(20))
+].sort_values("player_strength", ascending=False).head(20))
