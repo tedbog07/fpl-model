@@ -61,6 +61,11 @@ players["expected_total_points"] = (
     players["expected_attacking_points"]
     + players["expected_appearance_points"]
 )
+players["underlying_pp90"] = (
+    players["expected_attacking_points"]
+    / players["minutes"]
+    * 90
+)
 players["adjusted_attacking_points"] = (
     players["expected_attacking_points"]
     * players["minutes_projection"]
@@ -77,8 +82,7 @@ print(players[
     [
         "web_name",
         "position",
-        "minutes",
-        "total_points",
-        "actual_pp90"
+        "actual_pp90",
+        "underlying_pp90"
     ]
-].sort_values("actual_pp90", ascending=False).head(20))
+].sort_values("underlying_pp90", ascending=False).head(20))
