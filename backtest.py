@@ -114,3 +114,64 @@ print(
         ["actual_pp90", "future_pp90"]
     ].corr()
 )
+
+print(first_half_players["starts"].head())
+
+first_half_players["minutes_share"] = (
+    first_half_players["minutes"] / (19 * 90)
+)
+
+first_half_players["start_rate"] = (
+    first_half_players["starts"] / 19
+)
+
+first_half_players["minutes_projection"] = (
+    first_half_players["minutes_share"] * 0.5
+    + first_half_players["start_rate"] * 0.5
+)
+
+first_half_players["expected_points"] = (
+    first_half_players["player_strength"]
+    * first_half_players["minutes_projection"]
+    * 19
+)
+
+first_half_players["price"] = (
+    first_half_players["value"] / 10
+)
+
+first_half_players["points_per_million"] = (
+    first_half_players["expected_points"]
+    / first_half_players["price"]
+)
+
+print(
+    first_half_players[
+        ["expected_points", "price", "points_per_million"]
+    ]
+    .sort_values(
+        "points_per_million",
+        ascending=False
+    )
+    .head(20)
+)
+
+print(
+    first_half_players[
+        ["player_strength", "minutes_projection", "expected_points"]
+    ]
+    .sort_values(
+        "expected_points",
+        ascending=False
+    )
+    .head(20)
+)
+
+print(
+    first_half_players[
+        ["minutes", "starts", "minutes_share", "start_rate", "minutes_projection"]
+    ].sort_values(
+        "minutes_projection",
+        ascending=False
+    ).head(20)
+)

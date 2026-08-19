@@ -104,3 +104,8 @@ print(players[
         "player_strength"
     ]
 ].sort_values("player_strength", ascending=False).head(20))
+
+historical = pd.read_csv("data/gw1.csv")
+
+print(historical.head())
+print(historical.columns.tolist())
