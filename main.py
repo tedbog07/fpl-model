@@ -80,9 +80,14 @@ players["adjusted_attacking_points"] = (
 players["actual_pp90"] = (
     players["total_points"] / players["minutes"] * 90
 )
+players["confidence"] = players["minutes"] / 3000
+
+players["confidence"] = players["confidence"].clip(upper=1)
+
 players["player_strength"] = (
-    players["actual_pp90"] * 0.5
-    + players["underlying_pp90"] * 0.5
+    players["actual_pp90"] * players["confidence"]
+    +
+    players["underlying_pp90"] * (1 - players["confidence"])
 )
 
 players = players[players["minutes"] >= MINUTES_THRESHOLD]
@@ -92,9 +97,10 @@ players = players[players["minutes"] >= MINUTES_THRESHOLD]
 print(players[
     [
         "web_name",
-        "position",
+        "minutes",
         "actual_pp90",
         "underlying_pp90",
+        "confidence",
         "player_strength"
     ]
 ].sort_values("player_strength", ascending=False).head(20))

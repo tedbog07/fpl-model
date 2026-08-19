@@ -210,3 +210,21 @@ Possible improvements:
 - machine learning approaches
 - feature importance analysis
 - comparison against baseline model
+
+---
+
+## Player Strength Model v1.1 Experiment
+
+A confidence weighting adjustment was tested.
+
+Purpose:
+Reduce overreaction to small sample sizes.
+
+Method:
+Confidence based on minutes played.
+
+Observation:
+The model becomes more sceptical of players with limited minutes.
+
+Future improvement:
+Compare different weighting methods through backtesting.
