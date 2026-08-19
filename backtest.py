@@ -175,3 +175,16 @@ print(
         ascending=False
     ).head(20)
 )
+
+top_predictions = first_half_players.sort_values(
+    "player_strength",
+    ascending=False
+).head(50)
+
+top_actuals = second_half_players.sort_values(
+    "future_pp90",
+    ascending=False
+).head(50)
+
+print(top_predictions[["player_strength"]].head(20))
+print(top_actuals[["future_pp90"]].head(20))
