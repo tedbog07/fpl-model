@@ -102,3 +102,27 @@ Potential additions:
 - Fixture difficulty adjustments
 - Expected minutes model
 - Transfer optimisation
+
+---
+
+# First Backtest
+
+## Objective
+
+Test whether player strength predicts future player quality.
+
+## Setup
+
+Use first half of season data to predict second half.
+
+Input:
+- Gameweeks 1-19
+
+Prediction:
+- Player strength score
+
+Outcome:
+- Gameweeks 20-38 points per 90
+
+Success metric:
+- Correlation between predicted player strength and future points per 90
