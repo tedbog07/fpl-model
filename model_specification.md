@@ -171,3 +171,42 @@ Examples:
 The optimiser should make decisions from good projections.
 
 It should not hide poor assumptions behind mathematical complexity.
+
+---
+
+# Player Strength Model v1
+
+## Purpose
+
+Estimate a player's underlying ability when they are on the pitch.
+
+## Philosophy
+
+Player strength should not rely only on historical FPL points.
+
+Actual points contain both skill and randomness.
+
+Underlying statistics provide information about repeatable performance.
+
+## Formula
+
+Initial version:
+
+Player Strength =
+50% actual FPL performance
++
+50% underlying-stat performance
+
+Both components will be measured per 90 minutes.
+
+## Recency
+
+More recent seasons and matches should receive greater weighting than older data.
+
+## Future Development
+
+Possible improvements:
+- regression models
+- machine learning approaches
+- feature importance analysis
+- comparison against baseline model
