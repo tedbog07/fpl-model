@@ -1,0 +1,119 @@
+# FPL Model Specification v0.1
+
+## Goal
+
+Build a transparent Fantasy Premier League prediction model that estimates player value using underlying ability, expected minutes, fixtures and price.
+
+The philosophy is inspired by models such as the Transfer Algorithm:
+- separate player ability from playing opportunity
+- use underlying statistics rather than only historical points
+- value recent information more highly
+- optimise decisions under budget constraints
+
+---
+
+# Model Architecture
+
+## 1. Player Strength Model
+
+### Question
+
+How good is this player when they play?
+
+### Inputs
+
+Potential inputs:
+- historical FPL points
+- expected goals (xG)
+- expected assists (xA)
+- expected goal involvement (xGI)
+- shots
+- chances created
+- defensive statistics
+
+### Output
+
+Underlying points per minute estimate.
+
+---
+
+## 2. Expected Minutes Model
+
+### Question
+
+How often will this player play?
+
+### Inputs
+
+Potential inputs:
+- previous minutes
+- starts
+- injuries
+- suspensions
+- competition for places
+- team rotation
+- manual adjustments
+
+### Output
+
+Expected minutes over the projection period.
+
+---
+
+## 3. Fixture Model
+
+### Question
+
+How difficult are upcoming matches?
+
+### Inputs
+
+Potential inputs:
+- opponent strength
+- home/away advantage
+- betting odds
+- defensive/attacking team strength
+
+### Output
+
+Fixture-adjusted expected points.
+
+---
+
+## 4. Player Valuation Model
+
+### Question
+
+Is this player worth their price?
+
+### Inputs
+
+- expected points
+- player price
+- squad budget constraints
+- position scarcity
+
+### Output
+
+Player value ranking.
+
+---
+
+## 5. Squad Optimisation
+
+### Question
+
+What is the optimal squad?
+
+Constraints:
+- £100m budget
+- squad size
+- position requirements
+- maximum 3 players per club
+- transfer rules
+
+Possible outputs:
+- starting XI
+- bench
+- captain
+- transfers
