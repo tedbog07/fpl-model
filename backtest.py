@@ -115,7 +115,7 @@ print(
     ].corr()
 )
 
-print(first_half_players["starts"].head())
+# MINUTES PROJECTION
 
 first_half_players["minutes_share"] = (
     first_half_players["minutes"] / (19 * 90)
@@ -129,6 +129,9 @@ first_half_players["minutes_projection"] = (
     first_half_players["minutes_share"] * 0.5
     + first_half_players["start_rate"] * 0.5
 )
+
+
+# EXPECTED POINTS + VALUE
 
 first_half_players["expected_points"] = (
     first_half_players["player_strength"]
@@ -145,6 +148,36 @@ first_half_players["points_per_million"] = (
     / first_half_players["price"]
 )
 
+
+# REPORT
+
+print("\n=== TOP PLAYER STRENGTH ===")
+print(
+    first_half_players[
+        ["player_strength"]
+    ]
+    .sort_values(
+        "player_strength",
+        ascending=False
+    )
+    .head(10)
+)
+
+
+print("\n=== TOP EXPECTED POINTS ===")
+print(
+    first_half_players[
+        ["expected_points"]
+    ]
+    .sort_values(
+        "expected_points",
+        ascending=False
+    )
+    .head(10)
+)
+
+
+print("\n=== BEST VALUE ===")
 print(
     first_half_players[
         ["expected_points", "price", "points_per_million"]
@@ -153,38 +186,20 @@ print(
         "points_per_million",
         ascending=False
     )
-    .head(20)
+    .head(10)
+)
+
+
+print("\n=== MODEL VALIDATION ===")
+
+comparison = first_half_players.merge(
+    second_half_players,
+    on=["name", "position"],
+    suffixes=("_pred", "_future")
 )
 
 print(
-    first_half_players[
-        ["player_strength", "minutes_projection", "expected_points"]
-    ]
-    .sort_values(
-        "expected_points",
-        ascending=False
-    )
-    .head(20)
+    comparison[
+        ["player_strength", "future_pp90"]
+    ].corr()
 )
-
-print(
-    first_half_players[
-        ["minutes", "starts", "minutes_share", "start_rate", "minutes_projection"]
-    ].sort_values(
-        "minutes_projection",
-        ascending=False
-    ).head(20)
-)
-
-top_predictions = first_half_players.sort_values(
-    "player_strength",
-    ascending=False
-).head(50)
-
-top_actuals = second_half_players.sort_values(
-    "future_pp90",
-    ascending=False
-).head(50)
-
-print(top_predictions[["player_strength"]].head(20))
-print(top_actuals[["future_pp90"]].head(20))
