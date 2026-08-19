@@ -126,3 +126,38 @@ Outcome:
 
 Success metric:
 - Correlation between predicted player strength and future points per 90
+
+---
+
+# Dataset Plan
+
+## Initial Scope
+
+Test model across three historical seasons.
+
+Seasons:
+- 2023/24
+- 2024/25
+- 2025/26
+
+## Required Data
+
+Player gameweek-level data:
+
+- Player ID
+- Position
+- Team
+- Minutes
+- FPL points
+- Goals
+- Assists
+- Expected goals
+- Expected assists
+
+## Initial Test
+
+For each season:
+
+1. Use first half of season to build player strength.
+2. Predict second half performance.
+3. Compare predictions against actual future points per 90.
