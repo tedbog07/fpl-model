@@ -38,9 +38,19 @@ first_half_players["underlying_pp90"] = (
     * 90
 )
 
+reliability = (
+    first_half_players["minutes"] /
+    (first_half_players["minutes"] + 900)
+)
+
 first_half_players["player_strength"] = (
-    first_half_players["actual_pp90"] * 0.5
-    + first_half_players["underlying_pp90"] * 0.5
+    reliability *
+    (
+        first_half_players["actual_pp90"] * 0.5
+        + first_half_players["underlying_pp90"] * 0.5
+    )
+    +
+    (1 - reliability) * 2.5
 )
 
 first_half_players = first_half_players[
@@ -202,4 +212,39 @@ print(
     comparison[
         ["player_strength", "future_pp90"]
     ].corr()
+)
+
+print(
+    comparison[
+        [
+            "player_strength",
+            "future_pp90"
+        ]
+    ]
+    .sort_values(
+        "player_strength",
+        ascending=False
+    )
+    .head(30)
+)
+
+print("=== BIGGEST OVERPREDICTIONS ===")
+
+comparison["error"] = (
+    comparison["future_pp90"]
+    - comparison["player_strength"]
+)
+
+print(
+    comparison[
+        [
+            "player_strength",
+            "future_pp90",
+            "error"
+        ]
+    ]
+    .sort_values(
+        "error"
+    )
+    .head(20)
 )
