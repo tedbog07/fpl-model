@@ -17,7 +17,7 @@ print(second_half.shape)
 
 first_half_players = first_half.groupby(
     ["name", "position"]
-).sum(numeric_only=True)
+).sum(numeric_only=True).reset_index()
 
 print(first_half_players.head())
 
@@ -73,7 +73,7 @@ print(
 
 second_half_players = second_half.groupby(
     ["name", "position"]
-).sum(numeric_only=True)
+).sum(numeric_only=True).reset_index()
 
 second_half_players = second_half_players[
     second_half_players["minutes"] > 0
@@ -96,8 +96,8 @@ print(
     .head(20)
 )
 
-comparison = first_half_players.merge(
-    second_half_players,
+comparison = first_half_players.reset_index().merge(
+    second_half_players.reset_index(),
     on=["name", "position"],
     suffixes=("_pred", "_future")
 )
@@ -247,4 +247,46 @@ print(
         "error"
     )
     .head(20)
+)
+
+print(
+    comparison.groupby("position")[
+        ["player_strength", "future_pp90"]
+    ].corr()
+)
+
+print("=== MINUTES BY POSITION ===")
+
+print(
+    comparison.groupby("position")["minutes_pred"].describe()
+)
+print("=== FORWARD DIAGNOSTIC ===")
+
+print(comparison.columns)
+
+forward_comparison = comparison[
+    comparison["position"] == "FWD"
+]
+
+print(
+    forward_comparison[
+        [
+            "expected_goals_pred",
+            "expected_assists_pred",
+            "future_pp90"
+        ]
+    ]
+    .corr()
+)
+
+print("=== FORWARD TOTAL POINTS DIAGNOSTIC ===")
+
+print(
+    forward_comparison[
+        [
+            "expected_goals_pred",
+            "expected_assists_pred",
+            "total_points_future"
+        ]
+    ].corr()
 )
